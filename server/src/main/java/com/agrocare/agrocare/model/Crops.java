@@ -1,5 +1,7 @@
 package com.agrocare.agrocare.model;
 
+import com.agrocare.agrocare.helper.Constants;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -8,7 +10,11 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
-import java.time.Instant;
+import org.springframework.security.core.userdetails.User;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -23,13 +29,38 @@ public class Crops {
     @JsonProperty("id")
     private int id;
 
-    @JsonProperty("userId")
-    @Column(name = "userId", nullable = false)
-    private int userId;
+    @ManyToOne
+    @JoinColumn(name = "user")
+    @JsonIgnore
+    private Users user;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "crop", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Pests> pests = new ArrayList<>();
 
     @JsonProperty("cropName")
     @Column(name = "cropName", nullable = false)
     private String cropName;
+
+    @JsonProperty("cropType")
+    @Column(name = "cropType", nullable = false)
+    private String cropType;
+
+    @JsonProperty("cropVariety")
+    @Column(name = "cropVariety", nullable = false)
+    private String cropVariety;
+
+    @JsonProperty("fieldName")
+    @Column(name = "fieldName", nullable = false)
+    private String fieldName;
+
+    @JsonProperty("fieldSize")
+    @Column(name = "fieldSize", nullable = false)
+    private String fieldSize;
+
+    @JsonProperty("status")
+    @Column(name = "status", nullable = false)
+    private int status = Constants.Status.ACTIVE;
 
     @JsonProperty("plantingDate")
     @Column(name = "plantingDate", nullable = false)
@@ -39,15 +70,14 @@ public class Crops {
     @Column(name = "harvestDate")
     private String harvestDate;
 
-    @JsonProperty("status")
-    @Column(name = "status", nullable = false)
-    private int status;
-
     @CreatedDate
+    @JsonProperty("createdAt")
     @Column(name = "createdAt", nullable = false, updatable = false)
-    private String createdAt = Instant.now().toString();
+    private String createdAt = String.valueOf(new Date().toInstant());
 
     @LastModifiedDate
+    @JsonProperty("updatedAt")
     @Column(name = "updatedAt", nullable = false)
-    private String updatedAt;
+    private String updatedAt = String.valueOf(new Date().toInstant());
+
 }

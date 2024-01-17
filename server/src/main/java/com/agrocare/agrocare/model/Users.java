@@ -1,17 +1,23 @@
 package com.agrocare.agrocare.model;
 
+import com.agrocare.agrocare.helper.Constants;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -44,7 +50,7 @@ public class Users implements UserDetails {
 
     @JsonProperty("status")
     @Column(name = "status", nullable = false)
-    private int status;
+    private int status = Constants.Status.ACTIVE;
 
     @JsonProperty("accountNonExpired")
     @Column(name = "accountNonExpired", nullable = false)
@@ -62,15 +68,23 @@ public class Users implements UserDetails {
     @Column(name = "enabled", nullable = false)
     private boolean enabled = true;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Crops> crops = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Pests> pests = new ArrayList<>();
+
     @CreatedDate
     @JsonProperty("createdAt")
     @Column(name = "createdAt", nullable = false, updatable = false)
-    private String createdAt = Instant.now().toString();
+    private String createdAt = String.valueOf(new Date().toInstant());
 
     @LastModifiedDate
     @JsonProperty("updatedAt")
     @Column(name = "updatedAt", nullable = false)
-    private String updatedAt = Instant.now().toString();
+    private String updatedAt = String.valueOf(new Date().toInstant());
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -79,15 +93,15 @@ public class Users implements UserDetails {
         return list;
     }
 
-//    @Override
-//    public Collection<? extends GrantedAuthority> getAuthorities() {
-//        return List.of(new SimpleGrantedAuthority(this.role));
-//    }
+    // @Override
+    // public Collection<? extends GrantedAuthority> getAuthorities() {
+    // return List.of(new SimpleGrantedAuthority(this.role));
+    // }
 
-//    @Override
-//    public Collection<? extends GrantedAuthority> getAuthorities() {
-//        return Collections.singletonList(new SimpleGrantedAuthority(this.role));
-//    }
+    // @Override
+    // public Collection<? extends GrantedAuthority> getAuthorities() {
+    // return Collections.singletonList(new SimpleGrantedAuthority(this.role));
+    // }
 
     @Override
     public String getUsername() {
@@ -113,4 +127,5 @@ public class Users implements UserDetails {
     public boolean isEnabled() {
         return this.enabled;
     }
+
 }
