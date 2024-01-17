@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class CommonService {
@@ -54,8 +53,8 @@ public class CommonService {
     }
 
     public PestResponse pestResponse(Pests pests) {
-        return new PestResponse(pests.getId(), pests.getUser(),
-                pests.getCrop(), pests.getPestName(),
+        return new PestResponse(pests.getId(), pests.getUser(), pests.getUser().getId(),
+                pests.getCrop(), pests.getCrop().getId(), pests.getCrop().getCropName(), pests.getPestName(),
                 pests.getPestiside(), pests.getStatus(),
                 pests.getState(), pests.getDate(),
                 pests.getCreatedAt(), pests.getUpdatedAt());
@@ -73,17 +72,18 @@ public class CommonService {
     public Users getUserFromHeader(HttpServletRequest request) {
         String token = request.getHeader("Authorization").substring(7);
         String userEmail = jwtHelper.getUsernameFromToken(token);
-        return userRepo.findByEmail(userEmail).orElseThrow(() -> new UsernameNotFoundException(Constants.Messages.USER_ID_NOT_AVAILABLE));
+        return userRepo.findByEmail(userEmail)
+                .orElseThrow(() -> new UsernameNotFoundException(Constants.Messages.USER_ID_NOT_AVAILABLE));
     }
 
     public List<PestResponse> pestListCustomResponse(List<Pests> pests) {
         List<PestResponse> pestResponseList = new ArrayList<>();
         for (Pests pest : pests) {
-            pestResponseList.add(new PestResponse(pest.getId(), pest.getUser(),
-                    pest.getCrop(), pest.getPestName(),
-                    pest.getPestiside(), pest.getStatus(),
-                    pest.getState(), pest.getDate(),
-                    pest.getCreatedAt(), pest.getUpdatedAt()));
+            pestResponseList.add(new PestResponse(pest.getId(), null, pest.getUser().getId(),
+                    pest.getCrop(), pest.getCrop().getId(), pest.getCrop().getCropName(),
+                    pest.getPestName(),pest.getPestiside(), pest.getStatus(),
+                    pest.getState(), pest.getDate(),pest.getCreatedAt(),
+                    pest.getUpdatedAt()));
         }
         return pestResponseList;
     }

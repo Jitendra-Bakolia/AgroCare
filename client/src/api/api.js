@@ -6,13 +6,14 @@ import successHandler from './successHandler';
 axios.defaults.baseURL = BASE_URL;
 const ACCESS_URL = USER_BASE_URL;
 const jwtToken = Cookies.get('jwtToken')
+jwtToken && setHeader({ jwtToken: jwtToken })
 
+export function setHeader({ jwtToken }) {
+    axios.defaults.headers.common['Authorization'] = ACCESS_TOKEN_NAME + jwtToken;
+    return;
+}
 
 const api = {
-    setHeader: async ({ jwtToken }) => {
-        axios.defaults.headers.common['Authorization'] = ACCESS_TOKEN_NAME + jwtToken;
-        return;
-    },
     create: async ({ entity, jsonData }) => {
         try {
             const response = await axios.post(ACCESS_URL + entity, jsonData);
@@ -61,10 +62,9 @@ const api = {
             return errorHandler(error);
         }
     },
-    list: async ({ entity, options = {}, params = {} }) => {
+    list: async ({ entity, params = {} }) => {
         try {
             const response = await axios.get(ACCESS_URL + entity, { params: params });
-
             successHandler(response, {
                 notifyOnSuccess: false,
                 notifyOnFailed: false,
@@ -112,5 +112,4 @@ const api = {
     },
 };
 
-jwtToken && api.setHeader({ jwtToken: jwtToken })
 export default api;
