@@ -34,8 +34,16 @@ public class Crops {
     private Users user;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "crop", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "crop", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Pests> pests = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "crop", fetch = FetchType.LAZY)
+    private Inventory inventory;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "crop", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Irrigation> irrigations = new ArrayList<>();
 
     @JsonProperty("cropName")
     @Column(name = "cropName", nullable = false)
@@ -50,11 +58,11 @@ public class Crops {
     private String cropVariety;
 
     @JsonProperty("fieldName")
-    @Column(name = "fieldName", nullable = false)
+    @Column(name = "fieldName")
     private String fieldName;
 
     @JsonProperty("fieldSize")
-    @Column(name = "fieldSize", nullable = false)
+    @Column(name = "fieldSize")
     private String fieldSize;
 
     @JsonProperty("status")

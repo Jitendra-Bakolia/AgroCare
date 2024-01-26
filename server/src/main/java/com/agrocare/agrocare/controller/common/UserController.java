@@ -79,10 +79,9 @@ public class UserController {
     }
 
     @PutMapping(value = "/profile")
-    public ResponseEntity<CustomResponse> updateProfile(@RequestBody Users user) {
+    public ResponseEntity<CustomResponse> updateProfile(@RequestBody Users user, HttpServletRequest request) {
         try {
-            System.out.println(user.getEmail());
-            return new ResponseEntity<>(new CustomResponse("Success"), HttpStatus.OK);
+            return new ResponseEntity<>(userService.updateProfile(user, request), HttpStatus.OK);
         } catch (Exception err) {
             logger.info("Error: " + err.getMessage());
             return new ResponseEntity<>(new CustomResponse(Constants.Messages.INTERNAL_SERVER_ERROR),
@@ -91,10 +90,9 @@ public class UserController {
     }
 
     @PutMapping(value = "/password")
-    public ResponseEntity<CustomResponse> updatePassword(@RequestBody Users user) {
+    public ResponseEntity<CustomResponse> updatePassword(@RequestBody Users user, HttpServletRequest request) {
         try {
-            System.out.println("test" + user.getPassword());
-            return new ResponseEntity<>(new CustomResponse("Successs"), HttpStatus.OK);
+            return new ResponseEntity<>(userService.updateUserPassword(user.getPassword(), request), HttpStatus.OK);
         } catch (Exception err) {
             logger.info("Error: " + err.getMessage());
             return new ResponseEntity<>(new CustomResponse(Constants.Messages.INTERNAL_SERVER_ERROR),

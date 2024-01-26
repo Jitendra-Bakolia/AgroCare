@@ -6,7 +6,7 @@ import com.agrocare.agrocare.repository.CropRepository;
 import com.agrocare.agrocare.service.common.CommonService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DuplicateKeyException;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import com.agrocare.agrocare.helper.Constants;
 
@@ -26,13 +26,24 @@ public class CropService {
     }
 
     public CustomResponse deleteCrop(int cropId) {
-        if (this.findCropById(cropId).getPests().isEmpty()) {
-            this.cropRepository.deleteById(cropId);
-            return new CustomResponse(true, Constants.Messages.CROP_DELETED_SUCCESS);
-        } else {
-//            return new CustomResponse(false, Constants.Messages.CROP_CONNECTED_WITH_PESTS);
-            throw new DuplicateKeyException(Constants.Messages.CROP_CONNECTED_WITH_PESTS);
+        Crops crop = this.findCropById(cropId);
+        // Check if crop is connected with pests or crop monitor
+        if (crop.getInventory() != null && !crop.getPests().isEmpty()) {
+            return new CustomResponse(true, false, Constants.Messages.CROP_CONNECTED_WITH_PESTS_AND_INVENTORY);
         }
+
+        // Check if crop is connected with crop monitor
+        if (crop.getInventory() != null) {
+            return new CustomResponse(true, false, Constants.Messages.CROP_CONNECTED_WITH_INVENTORY);
+        }
+
+        // Check if crop is connected with pests
+        if (!crop.getPests().isEmpty()) {
+            return new CustomResponse(true, false, Constants.Messages.CROP_CONNECTED_WITH_PESTS);
+        }
+
+        this.cropRepository.deleteById(cropId);
+        return new CustomResponse(true, Constants.Messages.CROP_DELETED_SUCCESS);
     }
 
     public Crops findCropById(int cropId) {
@@ -41,7 +52,7 @@ public class CropService {
     }
 
     public CustomResponse getCrops(int userId) {
-        return new CustomResponse(this.cropRepository.findAllByUserId(userId));
+        return new CustomResponse(this.cropRepository.findAllByUserId(userId, Sort.by(Sort.Direction.DESC, "id")));
     }
 
     public CustomResponse getCrop(int cropId) {

@@ -8,6 +8,8 @@ public class Constants {
         int ACTIVE = 1;
         int INACTIVE = 2;
         int DELETE = 3;
+        int PENDING = 4;
+        int COMPLETED = 5;
     }
 
     public interface Messages {
@@ -37,6 +39,28 @@ public class Constants {
         String USER_NOT_FOUND_BY_USERNAME = "User Not Found with username !! ";
         String INVALID_USER_ID = "Invalid User Id !!";
         String CROP_CONNECTED_WITH_PESTS = "Crop connected with pests";
+        String PASSWORD_UPDATED = "Password updated successfully";
+        String PROFILE_UPDATED = "Profile updated successfully";
+        String ERROR_FETCHING_DASHBOARD_DETAILS = "Error while fetching dashboard details";
+        String ERROR_WHILE_ADDING_INVENTORY_DATA = "Error while adding inventory data";
+        String INVENTORY_ADDED_SUCCESS = "Inventory added successfully";
+        String INVENTORY_ALREADY_EXISTS = "Inventory already exists for ";
+        String ERROR_WHILE_FETCHING_INVENTORY_DATA = "Error while fetching inventory data";
+        String INVENTORY_NOT_FOUND = "Inventory not found !! ";
+        String ERROR_WHILE_UPDATING_INVENTORY_DATA = "Error while updating inventory data";
+        String INVENTORY_UPDATED_SUCCESS = "Inventory updated successfully";
+        String ERROR_WHILE_DELETING_INVENTORY_DATA = "Error while deleting inventory data";
+        String INVENTORY_DELETED_SUCCESS = "Inventory deleted successfully";
+        String CROP_CONNECTED_WITH_PESTS_AND_INVENTORY = "Crop connected with pests and inventory";
+        String CROP_CONNECTED_WITH_INVENTORY = "Crop connected with inventory";
+        String ERROR_WHILE_ADDING_IRRIGATION = "Error while adding irrigation";
+        String IRRIGATION_ADDED_SUCCESS = "Irrigation added successfully";
+        String ERROR_WHILE_FETCHING_IRRIGATION = "Error while fetching irrigation";
+        String IRRIGATION_NOT_FOUND = "Irrigation not found !! ";
+        String ERROR_WHILE_DELETING_IRRIGATION_DATA = "Error while deleting irrigation data";
+        String IRRIGATION_DELETED_SUCCESS = "Irrigation deleted successfully";
+        String ERROR_WHILE_UPDATING_IRRIGATION_DATA = "Error while updating irrigation data";
+        String IRRIGATION_UPDATED_SUCCESS = "Irrigation updated successfully";
     }
 
     public interface NullCheck {

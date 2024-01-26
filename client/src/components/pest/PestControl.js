@@ -19,16 +19,17 @@ const PestControl = () => {
     },
     pestiside: {
       type: 'string',
+      label: 'Pesticide',
     },
     date: {
       type: 'date',
+      label: 'Detection Date',
     },
   };
   let config = {
     fields,
     entity: 'pest',
     ENTITY_TITLE: 'Pest',
-    dataSource: [],
   }
   return (
     <>

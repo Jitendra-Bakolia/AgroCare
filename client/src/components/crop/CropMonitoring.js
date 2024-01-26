@@ -25,6 +25,7 @@ const CropMonitoring = () => {
     },
     fieldSize: {
       type: 'string',
+      label: 'Field Size',
     },
     plantingDate: {
       type: 'date',
@@ -33,6 +34,7 @@ const CropMonitoring = () => {
       hasFeedback: true,
     },
     harvestDate: {
+      label: 'Harvest Date',
       type: 'date',
     },
 
@@ -41,7 +43,6 @@ const CropMonitoring = () => {
     fields,
     entity: 'crop',
     ENTITY_TITLE: 'Crop',
-    dataSource: [],
   }
   return (
     <>
