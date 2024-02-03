@@ -93,9 +93,7 @@ const About = () => {
           maxWidth: '1100px',
         }}
       >
-        <p>
-          Explore our GitHub repository for the AgroCare app to get involved, contribute, or customize the application based on your requirements.
-        </p>
+        <p>Explore our GitHub repository for the AgroCare app to get involved, contribute, or customize the application based on your requirements.</p>
         <Button
           type="primary"
           shape="round"
