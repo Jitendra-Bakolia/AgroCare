@@ -1,6 +1,6 @@
 package com.agrocare.agrocare.configuration.jwt;
 
-import io.github.cdimascio.dotenv.Dotenv;
+//import io.github.cdimascio.dotenv.Dotenv;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -19,13 +19,16 @@ import java.util.function.Function;
 public class JwtHelper {
 
     // Load environment variables from .env file
-    Dotenv dotenv = Dotenv.configure().directory("src/main/resources").load();
+//    Dotenv dotenv = Dotenv.configure().directory("src/main/resources").load();
 
     // JWT token validity duration (in seconds)
+
+    private String JWT_TOKEN = "aPb2FD1gHL3mNoQ5rUtV7wX1zZ4b8eEhJm2PqRuT5wYx3z1b5g8kC8yB2w7D3sF4gU6jX3n4g6K9pMq2tW7zZ6q5mPq4tW6zW6zS6tY0x3JcVfYbRn2e5aPdSgUjXn4eHr7yTbEeHaKpMq4t7yW0z3mQd2dPf7vFg3h6J9cAsDfGhJkLp3mBvNzBc1z3XCXCDFRFVGTBHNJMKLKJHGFDSAZXCVBNMASDFGHJKLQWERTYUIOP";
     public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
 
     // Secret key for signing and verifying JWT tokens
-    private final Key secretKey = Keys.hmacShaKeyFor(dotenv.get("JWT_SECRET").getBytes());
+//    private final Key secretKey = Keys.hmacShaKeyFor(dotenv.get("JWT_SECRET").getBytes());
+    private final Key secretKey = Keys.hmacShaKeyFor(JWT_TOKEN.getBytes());
 
     // Retrieve username from JWT token
     public String getUsernameFromToken(String token) {
