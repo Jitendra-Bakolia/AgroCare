@@ -23,3 +23,5 @@ spring:
     username: ${env.DATABASE_USERNAME}
     password: ${env.DATABASE_PASSWORD}
     driver-class-name: ${env.DATABASE_DRIVER}
+
+JWT_SECRET: ${env.JWT_SECRET}

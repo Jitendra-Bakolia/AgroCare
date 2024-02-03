@@ -65,7 +65,7 @@ public class SecurityConfig {
         CorsConfiguration configuration = new CorsConfiguration();
 
         // Allowed origins (replace with your actual origins):
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3003", "http://localhost:3000"));
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3003", "http://localhost:3000", "https://agrocare-vzq2.onrender.com"));
 
         // Allowed methods:
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
