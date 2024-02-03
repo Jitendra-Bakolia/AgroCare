@@ -1,6 +1,6 @@
 #PORT
 server:
-  port: 9000
+  port: ${env.SERVER_PORT}
 
 #Database config
 spring:
@@ -9,17 +9,17 @@ spring:
   jpa:
     hibernate:
       naming:
-        physical-strategy: com.agrocare.agrocare.configuration.other.CamelCasePhysicalNamingStrategy
-      ddl-auto: update
+        physical-strategy: ${env.PHYSICAL_STRATEGY}
+      ddl-auto: ${env.HIBERNATE_DDL}
     show-sql: true
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQLDialect
+        dialect: ${env.HIBERNATE_DIALECT}
         use_sql_comments: true
         format_sql: true
   datasource:
-    name: AgroCare
-    url: jdbc:mysql://localhost:3306/AgroCare?createDatabaseIfNotExist=true
-    username: root
-    password: root
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    name: ${env.DATABASE_NAME}
+    url: jdbc:mysql://${env.DATABASE_HOST}/${env.DATABASE_NAME}?createDatabaseIfNotExist=true
+    username: ${env.DATABASE_USERNAME}
+    password: ${env.DATABASE_PASSWORD}
+    driver-class-name: ${env.DATABASE_DRIVER}
