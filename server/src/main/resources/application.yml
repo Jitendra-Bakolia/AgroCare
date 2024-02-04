@@ -1,6 +1,11 @@
 #PORT
 server:
   port: ${env.SERVER_PORT}
+#  ssl:
+#    key-store-type: ${env.SSL_KEY}
+#    key-store: ${env.SSL_KEYSTORE}
+#    key-store-password: ${env.SSL_KEYSTORE_PASSWORD}
+#    key-alias: ${env.SSL_ALIAS}
 
 #Database config
 spring:
