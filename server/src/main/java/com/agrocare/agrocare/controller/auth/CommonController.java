@@ -4,6 +4,7 @@ import com.agrocare.agrocare.helper.Constants;
 import com.agrocare.agrocare.pojo.CustomResponse;
 import com.agrocare.agrocare.model.Users;
 import com.agrocare.agrocare.service.common.CommonService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ public class CommonController {
 
     @Autowired
     private CommonService commonService;
+
+    @Autowired
+    private HttpServletRequest request;
 
     @PostMapping(value = "/register")
     public ResponseEntity<CustomResponse> registerUser(@RequestBody Users user) {
@@ -42,6 +46,17 @@ public class CommonController {
     public ResponseEntity<CustomResponse> getUser() {
         try {
             return new ResponseEntity<>(commonService.getAllUsers(), HttpStatus.OK);
+        } catch (Exception err) {
+            logger.info("Error: " + err.getMessage());
+            return new ResponseEntity<>(new CustomResponse(Constants.Messages.INTERNAL_SERVER_ERROR),
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping(value = "/ip")
+    public ResponseEntity<?> getIp() {
+        try {
+            return new ResponseEntity<>("Address  :-  http://" + request.getRemoteAddr(), HttpStatus.OK);
         } catch (Exception err) {
             logger.info("Error: " + err.getMessage());
             return new ResponseEntity<>(new CustomResponse(Constants.Messages.INTERNAL_SERVER_ERROR),
