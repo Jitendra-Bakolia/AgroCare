@@ -1,4 +1,5 @@
-export const BASE_URL = "https://3.101.86.159:9000"
+// export const BASE_URL = "http://localhost:9000"
+export const BASE_URL = `${window.location.origin.split(":")[0]}:${window.location.origin.split(":")[1]}:9000`
 export const PORT = "9000"
 export const HOME_BASE_URL = BASE_URL + "/"
 export const AUTH_BASE_URL = BASE_URL + "/auth/"
